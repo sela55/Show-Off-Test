@@ -7,6 +7,7 @@
 
 import UIKit
 import AVFoundation
+import Vision
 
 class QRViewController: UIViewController {
     
@@ -18,6 +19,8 @@ class QRViewController: UIViewController {
     @IBOutlet var cameraView: UIView!
     @IBOutlet var QRCodeDetectionLabel: UIView!
     
+    
+    
 
     let captureSession = AVCaptureSession();
     var videoPreviewLayer : AVCaptureVideoPreviewLayer?
@@ -28,6 +31,8 @@ class QRViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         
         let captureDevice = AVCaptureDevice.default(for: AVMediaType.video);
         
@@ -80,7 +85,7 @@ extension QRViewController : AVCaptureMetadataOutputObjectsDelegate{
         
         let metaDataObj = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
         
-        if metaDataObj.type == AVMetadataObject.ObjectType.qr && flag == true
+        if metaDataObj.type == AVMetadataObject.ObjectType.dogBody && flag == true
         {
             flag = false;
             QRCodeDetectionLabel.backgroundColor = .green;

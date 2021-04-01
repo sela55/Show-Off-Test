@@ -21,6 +21,12 @@ class SplashScreen: UIViewController {
         movieManager.saveItems();
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        MoveToListScreenLabel.isEnabled = false
+        movieManager.deleteData();
+        movieManager.saveItems();
+    }
+    
     @IBAction func FetchMovies(_ sender: UIButton)
     {
         DispatchQueue.main.async {
@@ -30,7 +36,6 @@ class SplashScreen: UIViewController {
             self.movieManager.fetchMovies();
             self.MoveToListScreenLabel.isEnabled = true;
         }
-        
     }
     
     

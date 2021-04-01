@@ -8,6 +8,8 @@
 import UIKit
 import CoreData
 
+
+
 class MovieList: UITableViewController
 {
     var chosenIndexPath : Int?
@@ -18,18 +20,22 @@ class MovieList: UITableViewController
     
     var dataFetchedResultsController : NSFetchedResultsController<Entity>!;
     
-    
 
     
     
-    override func viewDidLoad() {
-        loadMovies();
-    }
-    
+//    override func viewDidLoad() {
+//        DispatchQueue.global(qos: .userInitiated).async {
+//            self.loadMovies();
+//        }
+//        tableView.reloadData()
+//    }
+//    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true);
-        loadMovies();
-        tableView.reloadData()
+        DispatchQueue.global(qos: .userInitiated).sync {
+            self.loadMovies();
+            self.tableView.reloadData()
+        }
     }
 
     
@@ -43,7 +49,7 @@ class MovieList: UITableViewController
             return frc.sections!.count;
         }
         
-        return 0
+        return 0;
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -83,8 +89,12 @@ class MovieList: UITableViewController
         let item = dataFetchedResultsController.object(at: indexPath);
         
         if item.section == "Movies" {
-            performSegue(withIdentifier: "goToDetails", sender: self);
-            chosenIndexPath = indexPath.row
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "goToDetails", sender: self);
+                self.chosenIndexPath = indexPath.row
+            }
+//            performSegue(withIdentifier: "goToDetails", sender: self);
+//            chosenIndexPath = indexPath.row
         }
         
         
@@ -99,11 +109,14 @@ class MovieList: UITableViewController
             
             if let safeIndexpath = tableView.indexPathForSelectedRow
             {
- 
-                let imageURL:URL=URL(string: self.enititiesArray[safeIndexpath.row].image ?? "nothing no show")!
-                data = try? Data(contentsOf: imageURL)
+                DispatchQueue.global(qos: .userInitiated).async {
+                    let imageURL:URL=URL(string: self.enititiesArray[safeIndexpath.row].image ?? "nothing no show")!
+                    data = try? Data(contentsOf: imageURL)
+                }
                 DispatchQueue.main.async
                 {
+                    while data == nil {
+                    }
                     destinationVC.pic = UIImage(data: data!);
                 }
                 if let safeGenres = self.enititiesArray[safeIndexpath.row].genre
@@ -130,28 +143,34 @@ class MovieList: UITableViewController
     
     func loadMovies()
     {
-        let request : NSFetchRequest<Entity> = Entity.fetchRequest();
-        let sort = NSSortDescriptor(key: "releaseYear", ascending: false);
-        request.sortDescriptors = [sort];
-        dataFetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: #keyPath(Entity.section), cacheName: nil);
-        do{
-            enititiesArray = try context.fetch(request);
-            try dataFetchedResultsController.performFetch()
-        } catch
-        {
-            print("Error fetching data from context \(error)");
-        }
+            let request : NSFetchRequest<Entity> = Entity.fetchRequest();
+            let sort = NSSortDescriptor(key: "releaseYear", ascending: false);
+            request.sortDescriptors = [sort];
+            self.dataFetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: self.context, sectionNameKeyPath: #keyPath(Entity.section), cacheName: nil);
         
+            do{
+                self.enititiesArray = try self.context.fetch(request);
+                try self.dataFetchedResultsController.performFetch()
+                ///
+                ///
+            } catch
+            {
+                print("Error fetching data from context \(error)");
+            }
     }
     
     
     func saveItems() {
         do {
              try context.save()
+            
         } catch {
             print("Error decoding item array, \(error)")
         }
+//        synchronize()
     }
+    
+
     
     
     //MARK: - Go to QR Page

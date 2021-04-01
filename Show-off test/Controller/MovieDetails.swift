@@ -23,11 +23,11 @@ class MovieDetails : UIViewController {
     @IBOutlet var rating: UILabel!
     
     override func viewDidLoad() {
-        self.titleLabel.text = self.movieTitle;
-        self.yearReleased.text = self.self.movieYearRelease;
-        self.genre.text = self.movieGenres;
-        self.rating.text = self.movieRating;
         DispatchQueue.main.async {
+            self.titleLabel.text = self.movieTitle;
+            self.yearReleased.text = self.self.movieYearRelease;
+            self.genre.text = self.movieGenres;
+            self.rating.text = self.movieRating;
             self.movieImage.image = self.pic;
         }
        

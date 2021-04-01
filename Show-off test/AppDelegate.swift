@@ -16,6 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        
         return true
     }
 
@@ -37,20 +39,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         return container
     }()
+    
 
     // MARK: - Core Data Saving support
 
     func saveContext () {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
+        
+        let moc = NSManagedObjectContext(concurrencyType:.mainQueueConcurrencyType)
+        let privateMOC = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        privateMOC.parent = moc
+
+        privateMOC.perform({
             do {
-                try context.save()
+                try privateMOC.save()
             } catch {
-         
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                fatalError("Failure to save context: \(error)")
             }
-        }
+        })
+        
+        
+//        let context = persistentContainer.viewContext
+//
+//        if context.hasChanges {
+//            do {
+//                try context.save()
+//            } catch {
+//
+//                let nserror = error as NSError
+//                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+//            }
+//        }
     }
 
 }

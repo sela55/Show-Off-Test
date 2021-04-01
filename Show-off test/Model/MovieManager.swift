@@ -101,20 +101,37 @@ class MovieManager : ObservableObject {
     }
     
     func deleteData() {
-        let appDel:AppDelegate = (UIApplication.shared.delegate as! AppDelegate)
-        let context:NSManagedObjectContext = appDel.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Entity")
-        fetchRequest.returnsObjectsAsFaults = false
-        do {
-            let results = try context.fetch(fetchRequest)
-            for managedObject in results {
-                if let managedObjectData: NSManagedObject = managedObject as? NSManagedObject {
-                    context.delete(managedObjectData)
+        DispatchQueue.main.async {
+            let appDel:AppDelegate = (UIApplication.shared.delegate as! AppDelegate)
+            let context:NSManagedObjectContext = appDel.persistentContainer.viewContext
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Entity")
+            fetchRequest.returnsObjectsAsFaults = false
+            do {
+                let results = try context.fetch(fetchRequest)
+                for managedObject in results {
+                    if let managedObjectData: NSManagedObject = managedObject as? NSManagedObject {
+                        context.delete(managedObjectData)
+                    }
                 }
+            } catch let error as NSError {
+                print("Deleted all my data in myEntity error : \(error) \(error.userInfo)")
             }
-        } catch let error as NSError {
-            print("Deleted all my data in myEntity error : \(error) \(error.userInfo)")
+
         }
+//        let appDel:AppDelegate = (UIApplication.shared.delegate as! AppDelegate)
+//        let context:NSManagedObjectContext = appDel.persistentContainer.viewContext
+//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Entity")
+//        fetchRequest.returnsObjectsAsFaults = false
+//        do {
+//            let results = try context.fetch(fetchRequest)
+//            for managedObject in results {
+//                if let managedObjectData: NSManagedObject = managedObject as? NSManagedObject {
+//                    context.delete(managedObjectData)
+//                }
+//            }
+//        } catch let error as NSError {
+//            print("Deleted all my data in myEntity error : \(error) \(error.userInfo)")
+//        }
     }
     
    
