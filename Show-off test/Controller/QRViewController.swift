@@ -12,32 +12,24 @@ import Vision
 class QRViewController: UIViewController {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
-
+    
     var qrCodeData = [QRCodeData]();
     var coreData = [Entity]();
     
     @IBOutlet var cameraView: UIView!
     @IBOutlet var QRCodeDetectionLabel: UIView!
     
-    
-    
-
     let captureSession = AVCaptureSession();
     var videoPreviewLayer : AVCaptureVideoPreviewLayer?
     var count = 0;
     var flag = true;
-
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
         let captureDevice = AVCaptureDevice.default(for: AVMediaType.video);
         
-        do
-        {   if let safeCaptureDevice = captureDevice{
+        do {   if let safeCaptureDevice = captureDevice{
             let input = try AVCaptureDeviceInput(device: safeCaptureDevice);
             captureSession.addInput(input);
         }
@@ -67,25 +59,21 @@ class QRViewController: UIViewController {
         captureSession.stopRunning();
     }
     
-    
     @IBAction func RestartCamBtn(_ sender: UIButton) {
         captureSession.startRunning();
     }
-    
     
 }
 extension QRViewController : AVCaptureMetadataOutputObjectsDelegate{
     
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         if metadataObjects.count == 0 {
-            
             return;
         }
         
-        
         let metaDataObj = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
         
-        if metaDataObj.type == AVMetadataObject.ObjectType.dogBody && flag == true
+        if metaDataObj.type == AVMetadataObject.ObjectType.qr && flag == true
         {
             flag = false;
             QRCodeDetectionLabel.backgroundColor = .green;
@@ -111,17 +99,13 @@ extension QRViewController : AVCaptureMetadataOutputObjectsDelegate{
             }
             
         }
-        
-        
-        
-        
     }
     func saveItems() {
-                do {
-                     try context.save()
-                    print("Success")
-                } catch {
-                    print("Error decoding item array, \(error)")
-                }
-            }
+        do {
+            try context.save()
+            print("Success")
+        } catch {
+            print("Error decoding item array, \(error)")
+        }
+    }
 }

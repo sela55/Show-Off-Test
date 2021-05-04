@@ -13,23 +13,14 @@ import CoreData
 class MovieList: UITableViewController
 {
     var chosenIndexPath : Int?
+    
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
-
+    
     var enititiesArray = [Entity]();
     var QRArray = [QRCaption]()
     
     var dataFetchedResultsController : NSFetchedResultsController<Entity>!;
     
-
-    
-    
-//    override func viewDidLoad() {
-//        DispatchQueue.global(qos: .userInitiated).async {
-//            self.loadMovies();
-//        }
-//        tableView.reloadData()
-//    }
-//    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true);
         DispatchQueue.global(qos: .userInitiated).sync {
@@ -37,7 +28,7 @@ class MovieList: UITableViewController
             self.tableView.reloadData()
         }
     }
-
+    
     
     //MARK: - TableView Datasource Methods
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -58,69 +49,49 @@ class MovieList: UITableViewController
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
- 
         guard let sections = self.dataFetchedResultsController.sections else {
             fatalError("No sections in fetchedResultsController")
         }
-
         let sectionInfo = sections[section]
         return sectionInfo.numberOfObjects
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieItemCell", for: indexPath)
-        
         let item = dataFetchedResultsController.object(at: indexPath);
-        
-        
         cell.textLabel?.text = item.title;
-        
-        
         return cell;
     }
     
     //MARK: - Tableview Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         let item = dataFetchedResultsController.object(at: indexPath);
-        
         if item.section == "Movies" {
             DispatchQueue.main.async {
                 self.performSegue(withIdentifier: "goToDetails", sender: self);
                 self.chosenIndexPath = indexPath.row
             }
-//            performSegue(withIdentifier: "goToDetails", sender: self);
-//            chosenIndexPath = indexPath.row
         }
-        
-        
     }
-
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToDetails" {
             let destinationVC = segue.destination as! MovieDetails;
             var data : Data?
             var allGenres = ""
-            
-            if let safeIndexpath = tableView.indexPathForSelectedRow
-            {
+            if let safeIndexpath = tableView.indexPathForSelectedRow {
                 DispatchQueue.global(qos: .userInitiated).async {
                     let imageURL:URL=URL(string: self.enititiesArray[safeIndexpath.row].image ?? "nothing no show")!
                     data = try? Data(contentsOf: imageURL)
                 }
-                DispatchQueue.main.async
-                {
+                DispatchQueue.main.async {
                     while data == nil {
                     }
                     destinationVC.pic = UIImage(data: data!);
                 }
-                if let safeGenres = self.enititiesArray[safeIndexpath.row].genre
-                {
+                if let safeGenres = self.enititiesArray[safeIndexpath.row].genre {
                     for genre in safeGenres {
                         allGenres.append(genre)
                         allGenres.append(",")
@@ -135,42 +106,32 @@ class MovieList: UITableViewController
         }
     }
     
-        
-        
-    
-    
     //MARK: - Load and save movies and qr codes from core data
     
-    func loadMovies()
-    {
-            let request : NSFetchRequest<Entity> = Entity.fetchRequest();
-            let sort = NSSortDescriptor(key: "releaseYear", ascending: false);
-            request.sortDescriptors = [sort];
-            self.dataFetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: self.context, sectionNameKeyPath: #keyPath(Entity.section), cacheName: nil);
+    func loadMovies() {
+        let request : NSFetchRequest<Entity> = Entity.fetchRequest();
+        let sort = NSSortDescriptor(key: "releaseYear", ascending: false);
+        request.sortDescriptors = [sort];
+        self.dataFetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: self.context, sectionNameKeyPath: #keyPath(Entity.section), cacheName: nil);
         
-            do{
-                self.enititiesArray = try self.context.fetch(request);
-                try self.dataFetchedResultsController.performFetch()
-                ///
-                ///
-            } catch
-            {
-                print("Error fetching data from context \(error)");
-            }
+        do{
+            self.enititiesArray = try self.context.fetch(request);
+            try self.dataFetchedResultsController.performFetch()
+            
+        } catch {
+            print("Error fetching data from context \(error)");
+        }
     }
-    
     
     func saveItems() {
         do {
-             try context.save()
-            
+            try context.save()
         } catch {
             print("Error decoding item array, \(error)")
         }
-//        synchronize()
     }
     
-
+    
     
     
     //MARK: - Go to QR Page
@@ -179,5 +140,5 @@ class MovieList: UITableViewController
         self.performSegue(withIdentifier: "goToScanQR", sender: self)
     }
     
-
+    
 }

@@ -30,7 +30,7 @@ class MovieDetails : UIViewController {
             self.rating.text = self.movieRating;
             self.movieImage.image = self.pic;
         }
-       
+        
     }
-
+    
 }

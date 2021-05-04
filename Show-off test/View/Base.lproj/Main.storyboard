@@ -114,7 +114,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Movies List" id="LSH-9B-jhB">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="yYi-A7-21I">
+                        <barButtonItem key="rightBarButtonItem" systemItem="camera" id="yYi-A7-21I">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="addQRButton:" destination="9Mz-0I-4uP" id="ymd-tG-q9z"/>
