@@ -56,7 +56,6 @@ class MovieManager : ObservableObject {
         catch {
             print(error);
         }
-        
     }
     
 
