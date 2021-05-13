@@ -24,7 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BE1AAFB4259A818500504019 /* Show-off test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Show-off test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE1AAFB4259A818500504019 /* Save Your Movies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Save Your Movies.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE1AAFB7259A818500504019 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BE1AAFB9259A818500504019 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		BE1AAFBB259A818500504019 /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
@@ -65,7 +65,7 @@
 		BE1AAFB5259A818500504019 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BE1AAFB4259A818500504019 /* Show-off test.app */,
+				BE1AAFB4259A818500504019 /* Save Your Movies.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -128,9 +128,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		BE1AAFB3259A818500504019 /* Show-off test */ = {
+		BE1AAFB3259A818500504019 /* Save Your Movies */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BE1AAFCB259A818A00504019 /* Build configuration list for PBXNativeTarget "Show-off test" */;
+			buildConfigurationList = BE1AAFCB259A818A00504019 /* Build configuration list for PBXNativeTarget "Save Your Movies" */;
 			buildPhases = (
 				BE1AAFB0259A818500504019 /* Sources */,
 				BE1AAFB1259A818500504019 /* Frameworks */,
@@ -140,9 +140,9 @@
 			);
 			dependencies = (
 			);
-			name = "Show-off test";
+			name = "Save Your Movies";
 			productName = "Show-off test";
-			productReference = BE1AAFB4259A818500504019 /* Show-off test.app */;
+			productReference = BE1AAFB4259A818500504019 /* Save Your Movies.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -159,7 +159,7 @@
 					};
 				};
 			};
-			buildConfigurationList = BE1AAFAF259A818500504019 /* Build configuration list for PBXProject "Show-off test" */;
+			buildConfigurationList = BE1AAFAF259A818500504019 /* Build configuration list for PBXProject "Save Your Movies" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -172,7 +172,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BE1AAFB3259A818500504019 /* Show-off test */,
+				BE1AAFB3259A818500504019 /* Save Your Movies */,
 			);
 		};
 /* End PBXProject section */
@@ -392,7 +392,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BE1AAFAF259A818500504019 /* Build configuration list for PBXProject "Show-off test" */ = {
+		BE1AAFAF259A818500504019 /* Build configuration list for PBXProject "Save Your Movies" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BE1AAFC9259A818A00504019 /* Debug */,
@@ -401,7 +401,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BE1AAFCB259A818A00504019 /* Build configuration list for PBXNativeTarget "Show-off test" */ = {
+		BE1AAFCB259A818A00504019 /* Build configuration list for PBXNativeTarget "Save Your Movies" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BE1AAFCC259A818A00504019 /* Debug */,
